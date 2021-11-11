@@ -15,7 +15,7 @@ namespace PricingCalculator.Models
 
         public override string ToString()
         {
-            return $"StartDate: {StartDate.ToShortDateString()}, EndDate: {EndDate.ToShortDateString()}, DiscountInPercent: {DiscountInPercent}, HasDiscount: {HasDiscount}, HasDiscountForAPeriod: {HasDiscountForAPeriod}";
+            return $"Discount. StartDate: {StartDate.ToShortDateString()}, EndDate: {EndDate.ToShortDateString()}, DiscountInPercent: {DiscountInPercent}, HasDiscount: {HasDiscount}, HasDiscountForAPeriod: {HasDiscountForAPeriod}";
         }
     }
 }

@@ -38,6 +38,7 @@ namespace PricingCalculator.Services
             this.m_CustomerHandler = customerHandler;
         }
 
+
         /// <summary>
         /// Metoden beräknar kostnaden
         /// </summary>
@@ -103,7 +104,7 @@ namespace PricingCalculator.Services
             
             CostForService costForService = m_CustomerHandler.GetCostForService(callingService, customer); 
             Discount discount = m_CustomerHandler.GetDiscount(callingService, customer); 
-            string strConfigValue = m_CustomerHandler.GetConfigValueString(callingService, customer); 
+            string strConfigValueStringBaseCost = m_CustomerHandler.GetConfigValueStringBaseCost(callingService, customer); 
             bool bOnlyWorkingDays = m_CustomerHandler.OnlyWorkingDays(callingService, customer); 
             int iDays = 0;
 
@@ -121,13 +122,13 @@ namespace PricingCalculator.Services
 
 
             // Hämta baskostnaden för att använda servicen
-            if (costForService.HasItsOwnCostForService)
+            if (costForService != null && costForService.HasItsOwnCostForService)
             {
                 dblBaseCost = costForService.Cost;
             }
             else
             {// Vi hämtar baskostnaden från appsettings.json filen
-                string strServiceBaseCost = m_Config.GetValue<string>(strConfigValue);
+                string strServiceBaseCost = m_Config.GetValue<string>(strConfigValueStringBaseCost);
                 bool bBaseCostIsValid = Double.TryParse(strServiceBaseCost, out dblBaseCost);
 
                 if (bBaseCostIsValid == false || String.IsNullOrWhiteSpace(strServiceBaseCost))
@@ -143,7 +144,7 @@ namespace PricingCalculator.Services
 
             dblCost = dblBaseCost * Double.Parse(iDays.ToString());
 
-            if (discount.HasDiscount)
+            if (discount != null && discount.HasDiscount)
             {// Kunden har rabatt på service
 
                 if (discount.HasDiscountForAPeriod)
@@ -237,7 +238,7 @@ namespace PricingCalculator.Services
             int iNumberOfDays = 0;
 
             // Hämta uppgifter om eventuella rabatter
-            Discount discount = m_CustomerHandler.GetDiscount(callingService, customer); //customer.GetDiscount();           
+            Discount discount = m_CustomerHandler.GetDiscount(callingService, customer);
 
             if (discount != null && discount.HasDiscount && discount.HasDiscountForAPeriod)
             {

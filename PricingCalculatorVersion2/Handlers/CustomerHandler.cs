@@ -18,14 +18,7 @@ namespace PricingCalculator.Handlers
             if (customer == null)
                 throw new ArgumentNullException("CustomerHandler->GetDiscount(). Referensen till Customer objektet är null"); 
 
-            if (callingService == CallingService.SERVICE_A)
-                return customer.DiscountForServiceA;
-            else if (callingService == CallingService.SERVICE_B)
-                return customer.DiscountForServiceB;
-            else if (callingService == CallingService.SERVICE_C)
-                return customer.DiscountForServiceC;
-
-            return null;
+            return customer.GetDiscount(callingService);
         }
 
 
@@ -41,14 +34,7 @@ namespace PricingCalculator.Handlers
             if (customer == null)
                 throw new ArgumentNullException("CustomerHandler->GetCostForService(). Referensen till Customer objektet är null");
 
-            if (callingService == CallingService.SERVICE_A)
-                return customer.CostForServiceA;
-            else if (callingService == CallingService.SERVICE_B)
-                return customer.CostForServiceB;
-            else if (callingService == CallingService.SERVICE_C)
-                return customer.CostForServiceC;
-
-            return null;
+            return customer.GetCostForService(callingService);
         }
 
 
@@ -59,19 +45,12 @@ namespace PricingCalculator.Handlers
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>json element som skall hämtas från appsettings.json. Om service inte är vald returneras en tom sträng</returns>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
-        public string GetConfigValueString(CallingService callingService, Customer customer)
+        public string GetConfigValueStringBaseCost(CallingService callingService, Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("CustomerHandler->GetConfigValueString(). Referensen till Customer objektet är null");
 
-            if (callingService == CallingService.SERVICE_A)
-                return "ServiceBaseCost:ServiceA";
-            else if (callingService == CallingService.SERVICE_B)
-                return "ServiceBaseCost:ServiceB";
-            else if (callingService == CallingService.SERVICE_C)
-                return "ServiceBaseCost:ServiceC";
-
-            return String.Empty;
+            return customer.GetConfigValueStringBaseCost(callingService);
         }
 
 
@@ -88,14 +67,7 @@ namespace PricingCalculator.Handlers
             if (customer == null)
                 throw new ArgumentNullException("CustomerHandler->OnlyWorkingDays(). Referensen till Customer objektet är null");
 
-            if (callingService == CallingService.SERVICE_A)
-                return true;
-            else if (callingService == CallingService.SERVICE_B)
-                return true;
-            else if (callingService == CallingService.SERVICE_C)
-                return false;
-
-            return false;
+            return customer.OnlyWorkingDays(callingService);
         }
 
 
@@ -111,14 +83,7 @@ namespace PricingCalculator.Handlers
             if (customer == null)
                 throw new ArgumentNullException("CustomerHandler->CanUseService(). Referensen till Customer objektet är null");
 
-            if (callingService == CallingService.SERVICE_A)
-                return customer.CanUseServiceA;
-            else if (callingService == CallingService.SERVICE_B)
-                return customer.CanUseServiceB;
-            else if (callingService == CallingService.SERVICE_C)
-                return customer.CanUseServiceC;
-
-            return false;
+            return customer.CanUseService(callingService);
         }
     }
 }

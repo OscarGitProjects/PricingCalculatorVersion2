@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return $"Cost: {Cost}, HasItsOwnCostForService: {HasItsOwnCostForService}";
+            return $"CostForService. Cost: {Cost}, HasItsOwnCostForService: {HasItsOwnCostForService}";
         }
     }
 }

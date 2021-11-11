@@ -72,10 +72,16 @@ namespace NUnit_PricingCalculator_TestProject
             // Arrange
             // expected
             Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = false;
-            customer.DiscountForServiceA.HasDiscountForAPeriod = false;
             DateTime dtStartDate = DateTime.Now.AddDays(-1);
             DateTime dtEndDate = DateTime.Now;
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
 
             int iExpectedNumberOfDays = 0;
 
@@ -97,15 +103,28 @@ namespace NUnit_PricingCalculator_TestProject
             // Arrange
             // expected
             Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.HasDiscountForAPeriod = true;
-            customer.DiscountForServiceA.StartDate = new DateTime(2021, 11, 06);
-            customer.DiscountForServiceA.EndDate = new DateTime(2021, 11, 12);
 
             DateTime dtStartDate = new DateTime(2021, 11, 01);
             DateTime dtEndDate = new DateTime(2021, 11, 12);
 
             int iExpectedNumberOfDays = 7;
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.DiscountInPercent = 10.0;
+            discount.HasDiscount = true;
+            discount.HasDiscountForAPeriod = true;
+            discount.StartDate = new DateTime(2021, 11, 06);
+            discount.EndDate = new DateTime(2021, 11, 12);
+
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
 
             // Act
             // actual
@@ -125,15 +144,28 @@ namespace NUnit_PricingCalculator_TestProject
             // Arrange
             // expected
             Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.HasDiscountForAPeriod = true;
-            customer.DiscountForServiceA.StartDate = new DateTime(2021, 11, 06);
-            customer.DiscountForServiceA.EndDate = new DateTime(2021, 11, 12);
 
             DateTime dtStartDate = new DateTime(2021, 11, 01);
             DateTime dtEndDate = new DateTime(2021, 11, 12);
 
             int iExpectedNumberOfDays = 5;
+
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.DiscountInPercent = 10.0;
+            discount.HasDiscount = true;
+            discount.HasDiscountForAPeriod = true;
+            discount.StartDate = new DateTime(2021, 11, 06);
+            discount.EndDate = new DateTime(2021, 11, 12);
+
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
 
             // Act
             // actual
@@ -153,15 +185,27 @@ namespace NUnit_PricingCalculator_TestProject
             // Arrange
             // expected
             Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.HasDiscountForAPeriod = true;
-            customer.DiscountForServiceA.StartDate = new DateTime(2021, 11, 06);
-            customer.DiscountForServiceA.EndDate = new DateTime(2021, 11, 12);
 
             DateTime dtStartDate = new DateTime(2021, 11, 11);
             DateTime dtEndDate = new DateTime(2021, 11, 12);
 
             int iExpectedNumberOfDays = 2;
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.DiscountInPercent = 10.0;
+            discount.HasDiscount = true;
+            discount.HasDiscountForAPeriod = true;
+            discount.StartDate = new DateTime(2021, 11, 06);
+            discount.EndDate = new DateTime(2021, 11, 12);
+
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
 
             // Act
             // actual

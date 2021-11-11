@@ -75,10 +75,18 @@ namespace NUnit_PricingCalculator_TestProject
         {
             // Arrange
             // expected
-            Customer customer = new Customer(1, "Test 1");
             double dblExpectedCost = 123.0;
-            customer.CostForServiceA.Cost = dblExpectedCost;
-            customer.CostForServiceA.HasItsOwnCostForService = true;
+
+            Customer customer = new Customer(1, "Test 1");
+            
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            CostForService costForService = new CostForService { Cost = dblExpectedCost, HasItsOwnCostForService = true };
+            priceInformation.CostForService = costForService;
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
 
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate.AddDays(2);
@@ -100,12 +108,20 @@ namespace NUnit_PricingCalculator_TestProject
         {
             // Arrange
             // expected
-            Customer customer = new Customer(1, "Test 1");
             double dblExpectedCost = 123.0;
-            customer.CostForServiceA.Cost = dblExpectedCost;
-            customer.CostForServiceA.HasItsOwnCostForService = true;
+
+            Customer customer = new Customer(1, "Test 1");
             customer.NumberOfFreeDays = 1;
-           
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            CostForService costForService = new CostForService { Cost = dblExpectedCost, HasItsOwnCostForService = true };
+            priceInformation.CostForService = costForService;
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate.AddDays(2);
 
@@ -130,7 +146,14 @@ namespace NUnit_PricingCalculator_TestProject
             // expected
             Customer customer = new Customer(1, "Test 1");
             double dblExpectedCost = 0.2;
-          
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate.AddDays(2);
 
@@ -155,6 +178,13 @@ namespace NUnit_PricingCalculator_TestProject
             double dblExpectedCost = 0.2;
             customer.NumberOfFreeDays = 1;
 
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate.AddDays(2);
 
@@ -178,10 +208,26 @@ namespace NUnit_PricingCalculator_TestProject
         {
             // Arrange
             // expected
-            Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.DiscountInPercent = 10.0;
             double dblExpectedCost = 0.2;
+            double dblExpectedDiscountInPercent = 10.0;
+
+            Customer customer = new Customer(1, "Test 1");
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.HasDiscount = true;
+            discount.DiscountInPercent = dblExpectedDiscountInPercent;
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
+            //customer.DiscountForServiceA.HasDiscount = true;
+            //customer.DiscountForServiceA.DiscountInPercent = 10.0;
+            
 
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate;
@@ -191,7 +237,7 @@ namespace NUnit_PricingCalculator_TestProject
             double dblActualCost = this.m_PriceCalculateService.CalculatePriceForService(CallingService.SERVICE_A, customer, dtStartDate, dtEndDate);
 
             // Assert
-            double dblExpectedCost1 = dblExpectedCost * (1 - (double)(customer.DiscountForServiceA.DiscountInPercent / Double.Parse("100,0")));
+            double dblExpectedCost1 = dblExpectedCost * (1 - (double)(dblExpectedDiscountInPercent / Double.Parse("100,0")));
             Assert.AreEqual(dblExpectedCost1, dblActualCost);
         }
 
@@ -204,10 +250,25 @@ namespace NUnit_PricingCalculator_TestProject
         {
             // Arrange
             // expected
-            Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.DiscountInPercent = 10.0;
             double dblExpectedCost = 0.2;
+            double dblExpectedDiscountInPercent = 10.0;
+
+            Customer customer = new Customer(1, "Test 1");
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.HasDiscount = true;
+            discount.DiscountInPercent = dblExpectedDiscountInPercent;
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
+            //customer.DiscountForServiceA.HasDiscount = true;
+            //customer.DiscountForServiceA.DiscountInPercent = 10.0;
 
             DateTime dtStartDate = new DateTime(2021, 11, 08);
             DateTime dtEndDate = dtStartDate.AddDays(1);
@@ -217,7 +278,7 @@ namespace NUnit_PricingCalculator_TestProject
             double dblActualCost = this.m_PriceCalculateService.CalculatePriceForService(CallingService.SERVICE_A, customer, dtStartDate, dtEndDate);
 
             // Assert
-            double dblExpectedCost1 = dblExpectedCost * (double)(1 - (double)(customer.DiscountForServiceA.DiscountInPercent / Double.Parse("100,0")));
+            double dblExpectedCost1 = dblExpectedCost * (double)(1 - (double)(dblExpectedDiscountInPercent / Double.Parse("100,0")));
             Assert.AreEqual(2 * dblExpectedCost1, dblActualCost);
         }
 
@@ -230,15 +291,28 @@ namespace NUnit_PricingCalculator_TestProject
         {
             // Arrange
             // expected
-            Customer customer = new Customer(1, "Test 1");
-            customer.DiscountForServiceA.HasDiscount = true;
-            customer.DiscountForServiceA.DiscountInPercent = 10.0;
-
-            customer.DiscountForServiceA.HasDiscountForAPeriod = true;
-            customer.DiscountForServiceA.StartDate = new DateTime(2021, 11, 06);
-            customer.DiscountForServiceA.EndDate = new DateTime(2021, 11, 08);
-
             double dblExpectedCost = 0.2;
+            double dblExpectedDiscountInPercent = 10.0;
+
+            Customer customer = new Customer(1, "Test 1");
+
+            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
+            priceInformation.CallingService = CallingService.SERVICE_A;
+            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
+            priceInformation.OnlyWorkingDays = true;
+
+            Discount discount = new Discount();
+            discount.HasDiscount = true;
+            discount.DiscountInPercent = dblExpectedDiscountInPercent;
+
+            discount.HasDiscountForAPeriod = true;
+            discount.StartDate = new DateTime(2021, 11, 06);
+            discount.EndDate = new DateTime(2021, 11, 08);
+
+            priceInformation.Discount = discount;
+
+            customer.AddPriceCalculatorServiceInformation(priceInformation);
+
             DateTime dtStartDate = new DateTime(2021, 11, 06);
             DateTime dtEndDate = new DateTime(2021, 11, 11);
 
@@ -247,7 +321,7 @@ namespace NUnit_PricingCalculator_TestProject
             double dblActualCost = this.m_PriceCalculateService.CalculatePriceForService(CallingService.SERVICE_A, customer, dtStartDate, dtEndDate);
 
             // Assert
-            double dblExpectedCost1 = dblExpectedCost * (double)(1 - (double)(customer.DiscountForServiceA.DiscountInPercent / Double.Parse("100,0")));
+            double dblExpectedCost1 = dblExpectedCost * (double)(1 - (double)(dblExpectedDiscountInPercent / Double.Parse("100,0")));
 
             Assert.AreEqual(dblExpectedCost1 + (3 * dblExpectedCost), dblActualCost);
         }

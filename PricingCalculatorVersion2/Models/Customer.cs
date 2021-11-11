@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PricingCalculator.Services;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PricingCalculator.Models
@@ -9,25 +11,98 @@ namespace PricingCalculator.Models
     /// </summary>
     public class Customer
     {
+        /// <summary>
+        /// Customer id
+        /// </summary>
         public int CustomerId { get; set; }
+
+        /// <summary>
+        /// Customer namn
+        /// </summary>
         public string CustomerName { get; set; }
 
-        public List<PriceCalculatorService> PriceCalculatorService;
-        
-
-        public DateTime StartDateServiceA { get; set; }
-        public DateTime StartDateServiceB { get; set; }
-        public DateTime StartDateServiceC { get; set; }  
-        
-        public Discount DiscountForServiceA { get; set; }
-        public Discount DiscountForServiceB { get; set; }
-        public Discount DiscountForServiceC { get; set; }
-        
-        public CostForService CostForServiceA { get; set; }
-        public CostForService CostForServiceB { get; set; }
-        public CostForService CostForServiceC { get; set; }
-
+        /// <summary>
+        /// Antal dagar som customer inte faktureras för
+        /// </summary>
         public int NumberOfFreeDays { get; set; }
+
+        /// <summary>
+        /// Lista med information som gäller för olika service som kan användas
+        /// </summary>
+        public List<PriceCalculatorServiceInformation> PriceCalculatorServiceInformation;
+
+
+        /// <summary>
+        /// Metoden returnerar objekt med eventuell rabatt för användning av vald Service
+        /// </summary>
+        /// <param name="CallingService">Anropande service</param>
+        /// <returns>Discount objekt. Om service inte är vald returneras null</returns>
+        public Discount GetDiscount(CallingService CallingService)
+        {
+            var service = PriceCalculatorServiceInformation.Where(cs => cs.CallingService == CallingService).FirstOrDefault();
+            return service?.Discount;
+        }
+
+
+        /// <summary>
+        /// Metoden returnera objekt med kostnaden för att använda en vald service
+        /// </summary>
+        /// <param name="CallingService">Vilken tjänst är det som anropas</param>
+        /// <returns>CostForService objekt. Om service inte är vald returneras null</returns>
+        public CostForService GetCostForService(CallingService CallingService)
+        {
+            var service = PriceCalculatorServiceInformation.Where(cs => cs.CallingService == CallingService).FirstOrDefault();
+            return service?.CostForService;
+        }
+
+
+        /// <summary>
+        /// Metoden returnera den string med vilket json element man skall hämta från appsettings.json filen
+        /// </summary>
+        /// <param name="CallingService">Vilken tjänst är det som anropas</param>
+        /// <returns>json element som skall hämtas från appsettings.json. Om service inte är vald returneras en tom sträng</returns>
+        public string GetConfigValueStringBaseCost(CallingService CallingService)
+        {
+            var service = PriceCalculatorServiceInformation.Where(cs => cs.CallingService == CallingService).FirstOrDefault();
+            return service != null ? service.ConfigValueStringBaseCost : String.Empty;
+        }
+
+
+        /// <summary>
+        /// true om vi bara skall ta betalt för arbetsdagar. Annars retruneras false
+        /// </summary>
+        /// <param name="CallingService">Vilken tjänst är det som anropas</param>
+        /// <returns>true om vi bara skall ta betalt för arbetsdagar. Annars retruneras false</returns>
+        public bool OnlyWorkingDays(CallingService CallingService)
+        {
+            var service = PriceCalculatorServiceInformation.Where(cs => cs.CallingService == CallingService).FirstOrDefault();
+            return service != null ? service.OnlyWorkingDays : false;
+        }
+
+
+        /// <summary>
+        /// Metoden kontrollera om customer får använda service
+        /// </summary>
+        /// <param name="CallingService">Anropande service</param>
+        /// <returns>true om customer får använda servicen. Annars returneras false</returns>
+        public bool CanUseService(CallingService CallingService)
+        {
+            var service = PriceCalculatorServiceInformation.Where(cs => cs.CallingService == CallingService).FirstOrDefault();
+            return service != null ? service.CanUseService : false;
+        }
+
+
+        /// <summary>
+        /// Metoden lähher till ett nytt PriceCalculatorServiceInformation objekt till list med objekt
+        /// </summary>
+        /// <param name="PriceCalculatorServiceInformation">Nytt PriceCalculatorServiceInformation objekt</param>
+        public void AddPriceCalculatorServiceInformation(PriceCalculatorServiceInformation PriceCalculatorServiceInformation)
+        {
+            if (this.PriceCalculatorServiceInformation == null)
+                this.PriceCalculatorServiceInformation = new List<PriceCalculatorServiceInformation>();
+
+            this.PriceCalculatorServiceInformation.Add(PriceCalculatorServiceInformation);
+        }        
 
 
         /// <summary>
@@ -45,52 +120,6 @@ namespace PricingCalculator.Models
 
 
         /// <summary>
-        /// Property som returnerar true om användaren kan använda service a
-        /// Annars returneras false
-        /// </summary>
-        public bool CanUseServiceA { 
-            get { 
-                if(StartDateServiceA.Date <= DateTime.Now.Date)
-                    return true;
-
-                return false;
-            } 
-        }
-
-
-        /// <summary>
-        /// Property som returnerar true om användaren kan använda service b
-        /// Annars returneras false
-        /// </summary>
-        public bool CanUseServiceB
-        {
-            get
-            {
-                if (StartDateServiceB.Date <= DateTime.Now.Date)
-                    return true;
-
-                return false;
-            }
-        }
-
-
-        /// <summary>
-        /// Property som returnerar true om användaren kan använda service c
-        /// Annars returneras false
-        /// </summary>
-        public bool CanUseServiceC
-        {
-            get
-            {
-                if (StartDateServiceC.Date <= DateTime.Now.Date)
-                    return true;
-
-                return false;
-            }
-        }
-
-
-        /// <summary>
         /// Konstruktor
         /// </summary>
         /// <param name="iCustomerId">CustomerId</param>
@@ -100,20 +129,7 @@ namespace PricingCalculator.Models
             CustomerId = iCustomerId;
             CustomerName = strCustomerName;
 
-            PriceCalculatorService = new List<PriceCalculatorService>();
-
-            // Sätt lite startvärden
-            DiscountForServiceA = new Discount();
-            DiscountForServiceB = new Discount();
-            DiscountForServiceC = new Discount();
-
-            CostForServiceA = new CostForService();
-            CostForServiceB = new CostForService();
-            CostForServiceC = new CostForService();
-
-            StartDateServiceA = DateTime.Now.AddYears(-100);
-            StartDateServiceB = DateTime.Now.AddYears(-100);
-            StartDateServiceC = DateTime.Now.AddYears(-100);
+            PriceCalculatorServiceInformation = new List<PriceCalculatorServiceInformation>();
 
             NumberOfFreeDays = 0;
         }
@@ -122,20 +138,12 @@ namespace PricingCalculator.Models
         public override string ToString()
         {
             StringBuilder strBuild = new StringBuilder();
-            strBuild.AppendLine($"CustomerId: {CustomerId}, CustomerName: {CustomerName}");
+            strBuild.AppendLine($"CustomerId: {CustomerId}, CustomerName: {CustomerName}, NumberOfFreeDays: {NumberOfFreeDays}");
 
-            strBuild.AppendLine($"NumberOfFreeDays: {NumberOfFreeDays}");
-
-            strBuild.AppendLine($"StartDateServiceA: {StartDateServiceA.ToShortDateString()}, StartDateServiceB: {StartDateServiceB.ToShortDateString()}, StartDateServiceC: {StartDateServiceC.ToShortDateString()}");
-
-            strBuild.AppendLine("DiscountForServiceA: " + DiscountForServiceA);
-            strBuild.AppendLine("DiscountForServiceB: " + DiscountForServiceB);
-            strBuild.AppendLine("DiscountForServiceC: " + DiscountForServiceC);
-
-            strBuild.AppendLine("CostForServiceA: " + CostForServiceA);
-            strBuild.AppendLine("CostForServiceB: " + CostForServiceB);
-            strBuild.AppendLine("CostForServiceC: " + CostForServiceC);
-
+            foreach(var serviceInformation in PriceCalculatorServiceInformation)
+            {
+                strBuild.AppendLine(serviceInformation.ToString());
+            }
             return strBuild.ToString();
         }
     }
