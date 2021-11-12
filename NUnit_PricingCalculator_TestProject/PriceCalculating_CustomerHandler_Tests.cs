@@ -482,48 +482,5 @@ namespace NUnit_PricingCalculator_TestProject
 
         #endregion  // End of region test av CanUseService
 
-        #region Test kontrollerar att AddPriceCalculatorServiceInformationt fungera
-
-        /// <summary>
-        /// Test kontrollerar att AddPriceCalculatorServiceInformationt fungera
-        /// Kontroll av att vi fårkorrekt antal PriceCalculatorServiceInformationt från customer objektet
-        /// </summary>
-        [Test]
-        public void PriceCalculating_CustomerHandler_AddPriceCalculatorServiceInformation_Add_Objects_Test()
-        {
-            // Arrange
-            // expected
-            string strExpectedString = "ServiceBaseCost:ServiceB";
-            Customer customer = new Customer(1, "Test costumer 1");
-            customer.NumberOfFreeDays = 0;
-
-            PriceCalculatorServiceInformation priceInformation = new PriceCalculatorServiceInformation();
-            priceInformation.CallingService = CallingService.SERVICE_A;
-            priceInformation.OnlyWorkingDays = true;
-            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceA";
-            priceInformation.StartDate = DateTime.Now.AddDays(1);
-
-            customer.AddPriceCalculatorServiceInformation(priceInformation);
-
-
-            priceInformation = new PriceCalculatorServiceInformation();
-            priceInformation.CallingService = CallingService.SERVICE_B;
-            priceInformation.OnlyWorkingDays = true;
-            priceInformation.ConfigValueStringBaseCost = "ServiceBaseCost:ServiceB";
-            priceInformation.StartDate = DateTime.Now.AddDays(1);
-
-            customer.AddPriceCalculatorServiceInformation(priceInformation);
-
-
-            // Act
-            // actual
-            int iActualNumberOfPriceCalculatorServiceInformationObjects = customer.PriceCalculatorServiceInformation.Count;
-
-            // Assert
-            Assert.AreEqual(2, iActualNumberOfPriceCalculatorServiceInformationObjects);
-        }
-
-        #endregion  // End of region Test kontrollerar att AddPriceCalculatorServiceInformationt fungera
-
     }
 }

@@ -93,16 +93,36 @@ namespace PricingCalculator.Models
 
 
         /// <summary>
-        /// Metoden lähher till ett nytt PriceCalculatorServiceInformation objekt till list med objekt
+        /// Metoden lägger till ett nytt PriceCalculatorServiceInformation objekt till list med objekt
+        /// Om det redan finns information om servicen, raderas det tidigare
         /// </summary>
         /// <param name="PriceCalculatorServiceInformation">Nytt PriceCalculatorServiceInformation objekt</param>
         public void AddPriceCalculatorServiceInformation(PriceCalculatorServiceInformation PriceCalculatorServiceInformation)
         {
             if (this.PriceCalculatorServiceInformation == null)
-                this.PriceCalculatorServiceInformation = new List<PriceCalculatorServiceInformation>();
+                this.PriceCalculatorServiceInformation = new List<PriceCalculatorServiceInformation>();            
+
+            // Kontrollera serviceinformationen redan finns. Då skall den tidigare informationen raderas
+            PriceCalculatorServiceInformation priceServiceInformation = this.PriceCalculatorServiceInformation.Where(ch => ch.CallingService == PriceCalculatorServiceInformation.CallingService).FirstOrDefault();
+            if(priceServiceInformation != null)
+                this.RemovePriceCalculatorServiceInformation(priceServiceInformation);
 
             this.PriceCalculatorServiceInformation.Add(PriceCalculatorServiceInformation);
-        }        
+        }
+
+
+        /// <summary>
+        /// Metoden raderad PriceCalculatorServiceInformation objekt från list med objekt
+        /// </summary>
+        /// <param name="PriceCalculatorServiceInformation">PriceCalculatorServiceInformation objekt som vi vill radera</param>
+        public void RemovePriceCalculatorServiceInformation(PriceCalculatorServiceInformation PriceCalculatorServiceInformation)
+        {
+            if (this.PriceCalculatorServiceInformation != null)
+            {
+                PriceCalculatorServiceInformation priceServiceInformation = this.PriceCalculatorServiceInformation.Where(ch => ch.CallingService == PriceCalculatorServiceInformation.CallingService).FirstOrDefault();
+                this.PriceCalculatorServiceInformation.Remove(priceServiceInformation);
+            }
+        }
 
 
         /// <summary>
