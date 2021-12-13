@@ -47,13 +47,17 @@ namespace PricingCalculator.Services
         /// <param name="dtStartDate">Startdatum</param>
         /// <param name="dtEndDate">Slutdatum</param>
         /// <returns>Kostnaden</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         /// <exception cref="InvalidServiceBaseCostInAppsettingsException">Kastas om ServiceBaseCost data i Appsettings.json inte är korrekt</exception>
         public double CalculatePrice(CallingService callingService, Customer customer, DateTime dtStartDate, DateTime dtEndDate)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "PriceCalculateService->CalculatePric(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("PriceCalculateService->CalculatePrice(). Referensen till customer är null");
+                throw new ArgumentNullException(nameof(customer), "PriceCalculateService->CalculatePrice(). Referensen till customer är null");
 
             if (dtStartDate > dtEndDate)
                 throw new ArgumentException("PriceCalculateService->CalculatePrice(). StartDatum är inte före slutdatum");
@@ -86,13 +90,17 @@ namespace PricingCalculator.Services
         /// <param name="dtStartDate">Startdatum för användningen av service</param>
         /// <param name="dtEndDate">Slutdatum för användningen av service</param>
         /// <returns>Kostnaden för att använda service under angiven period</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         /// <exception cref="InvalidServiceBaseCostInAppsettingsException">Kastas om ServiceBaseCost data i Appsettings.json inte är korrekt</exception>
         public double CalculatePriceForService(CallingService callingService, Customer customer, DateTime dtStartDate, DateTime dtEndDate)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "PriceCalculateService->CalculatePriceForService(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("PriceCalculateService->CalculatePriceForService(). Referensen till customer är null");
+                throw new ArgumentNullException(nameof(customer), "PriceCalculateService->CalculatePriceForService(). Referensen till customer är null");  ;
 
             if (dtStartDate > dtEndDate)
                 throw new ArgumentException("PriceCalculateService->CalculatePriceForService(). StartDatum är inte före slutdatum");
@@ -223,13 +231,17 @@ namespace PricingCalculator.Services
         /// <param name="dtStartDate">Startdatum</param>
         /// <param name="dtEndDate">Slutdatum</param>
         /// <param name="bOnlyWeekDays">true om vi bara skall räkna måndag till och med fredag. false innebär att vi räknar alla veckans dagar. default false</param>
-        /// <returns></returns>
+        /// <returns>Antal dagar som är inom perioden för rabatt</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         public int CalculateNumberOfDiscountedDaysInPeriodForService(CallingService callingService, Customer customer, DateTime dtStartDate, DateTime dtEndDate, bool bOnlyWeekDays = false)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "PriceCalculateService->CalculateNumberOfDiscountedDaysInPeriodForService(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("PriceCalculateService->CalculateNumberOfDiscountedDaysInPeriodForService(). Referensen till customer är null");
+                throw new ArgumentNullException(nameof(customer), "PriceCalculateService->CalculateNumberOfDiscountedDaysInPeriodForService(). Referensen till customer är null");
 
             if (dtStartDate > dtEndDate)
                 throw new ArgumentException("PriceCalculateService->CalculateNumberOfDiscountedDaysInPeriodForService(). StartDatum är inte före slutdatum");

@@ -12,11 +12,15 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>Discount objekt. Om service inte är vald returneras null</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public Discount GetDiscount(CallingService callingService, Customer customer)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "CustomerHandler->GetDiscount(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("CustomerHandler->GetDiscount(). Referensen till Customer objektet är null"); 
+                throw new ArgumentNullException(nameof(customer), "CustomerHandler->GetDiscount(). Referensen till Customer objektet är null"); 
 
             return customer.GetDiscount(callingService);
         }
@@ -28,11 +32,15 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>CostForService objekt. Om service inte är vald returneras null</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public CostForService GetCostForService(CallingService callingService, Customer customer)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "CustomerHandler->GetCostForService(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("CustomerHandler->GetCostForService(). Referensen till Customer objektet är null");
+                throw new ArgumentNullException(nameof(customer), "CustomerHandler->GetCostForService(). Referensen till Customer objektet är null");
 
             return customer.GetCostForService(callingService);
         }
@@ -44,11 +52,15 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>json element som skall hämtas från appsettings.json. Om service inte är vald returneras en tom sträng</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public string GetConfigValueStringBaseCost(CallingService callingService, Customer customer)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "CustomerHandler->GetConfigValueStringBaseCost(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("CustomerHandler->GetConfigValueString(). Referensen till Customer objektet är null");
+                throw new ArgumentNullException(nameof(customer), "CustomerHandler->GetConfigValueStringBaseCost(). Referensen till Customer objektet är null");
 
             return customer.GetConfigValueStringBaseCost(callingService);
         }
@@ -61,11 +73,15 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>true om vi bara skall ta betalt för arbetsdagar. Annars retruneras false. Om service inte är vald returneras false</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public bool OnlyWorkingDays(CallingService callingService, Customer customer)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "CustomerHandler->OnlyWorkingDays(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("CustomerHandler->OnlyWorkingDays(). Referensen till Customer objektet är null");
+                throw new ArgumentNullException(nameof(customer), "CustomerHandler->OnlyWorkingDays(). Referensen till Customer objektet är null");
 
             return customer.OnlyWorkingDays(callingService);
         }
@@ -77,11 +93,15 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>true om det går att använda vald service. Annars returneras false</returns>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public bool CanUseService(CallingService callingService, Customer customer)
         {
+            if (callingService == CallingService.NA)
+                throw new ArgumentNullException(nameof(callingService), "CustomerHandler->CanUseService(). Referensen till CallingService objektet är inte satt dvs. CallingService.NA");
+
             if (customer == null)
-                throw new ArgumentNullException("CustomerHandler->CanUseService(). Referensen till Customer objektet är null");
+                throw new ArgumentNullException(nameof(customer), "CustomerHandler->CanUseService(). Referensen till Customer objektet är null");
 
             return customer.CanUseService(callingService);
         }
