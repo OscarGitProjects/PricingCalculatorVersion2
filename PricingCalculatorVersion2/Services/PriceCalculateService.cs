@@ -46,7 +46,7 @@ namespace PricingCalculator.Services
         /// <param name="customer">Customer objekt med information</param>
         /// <param name="dtStartDate">Startdatum</param>
         /// <param name="dtEndDate">Slutdatum</param>
-        /// <returns>Kostnaden</returns>
+        /// <returns>Kostnaden</returns> 
         /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>

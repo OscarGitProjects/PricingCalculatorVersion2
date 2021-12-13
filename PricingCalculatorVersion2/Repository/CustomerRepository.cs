@@ -1,5 +1,6 @@
 ﻿using PricingCalculator.Exceptions;
 using PricingCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,9 +28,13 @@ namespace PricingCalculator.Repository
         /// Metoden lägger till en customer
         /// </summary>
         /// <param name="customer">Referense till customer</param>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         /// <exception cref="CustomerAlreadyExistsException">Kastas om en customer med samma customerId redan finns</exception>
         public void AddCustomer(Customer customer)
         {
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer), "CustomerRepository->AddCustomer(). Referensen till Customer objektet är null");
+
             if (m_lsCustomers == null)
                 m_lsCustomers = new List<Customer>();
 
