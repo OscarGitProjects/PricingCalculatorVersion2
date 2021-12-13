@@ -12,7 +12,7 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>Discount objekt. Om service inte är vald returneras null</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public Discount GetDiscount(CallingService callingService, Customer customer)
         {
@@ -32,7 +32,7 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>CostForService objekt. Om service inte är vald returneras null</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public CostForService GetCostForService(CallingService callingService, Customer customer)
         {
@@ -52,7 +52,7 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>json element som skall hämtas från appsettings.json. Om service inte är vald returneras en tom sträng</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public string GetConfigValueStringBaseCost(CallingService callingService, Customer customer)
         {
@@ -73,7 +73,7 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>true om vi bara skall ta betalt för arbetsdagar. Annars retruneras false. Om service inte är vald returneras false</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public bool OnlyWorkingDays(CallingService callingService, Customer customer)
         {
@@ -93,7 +93,7 @@ namespace PricingCalculator.Handlers
         /// <param name="callingService">Vilken tjänst är det som anropas</param>
         /// <param name="customer">Referens till customer objekt</param>
         /// <returns>true om det går att använda vald service. Annars returneras false</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="ArgumentNullException">Kastats om referensen till Customer objektet är null</exception>
         public bool CanUseService(CallingService callingService, Customer customer)
         {

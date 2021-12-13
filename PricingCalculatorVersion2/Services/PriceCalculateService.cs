@@ -47,7 +47,7 @@ namespace PricingCalculator.Services
         /// <param name="dtStartDate">Startdatum</param>
         /// <param name="dtEndDate">Slutdatum</param>
         /// <returns>Kostnaden</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         /// <exception cref="InvalidServiceBaseCostInAppsettingsException">Kastas om ServiceBaseCost data i Appsettings.json inte är korrekt</exception>
@@ -90,7 +90,7 @@ namespace PricingCalculator.Services
         /// <param name="dtStartDate">Startdatum för användningen av service</param>
         /// <param name="dtEndDate">Slutdatum för användningen av service</param>
         /// <returns>Kostnaden för att använda service under angiven period</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         /// <exception cref="InvalidServiceBaseCostInAppsettingsException">Kastas om ServiceBaseCost data i Appsettings.json inte är korrekt</exception>
@@ -232,7 +232,7 @@ namespace PricingCalculator.Services
         /// <param name="dtEndDate">Slutdatum</param>
         /// <param name="bOnlyWeekDays">true om vi bara skall räkna måndag till och med fredag. false innebär att vi räknar alla veckans dagar. default false</param>
         /// <returns>Antal dagar som är inom perioden för rabatt</returns>
-        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet är inte satt dvs. CallingService.NA</exception>
+        /// <exception cref="ArgumentNullException">Kastats om referensen till CallingService objektet inte satt dvs. CallingService.NA</exception>
         /// <exception cref="System.ArgumentNullException">Undantaget kastas om referensen till Customer objektet är null</exception>
         /// <exception cref="System.ArgumentException">StartDatum inte är före slutdatum</exception>
         public int CalculateNumberOfDiscountedDaysInPeriodForService(CallingService callingService, Customer customer, DateTime dtStartDate, DateTime dtEndDate, bool bOnlyWeekDays = false)
